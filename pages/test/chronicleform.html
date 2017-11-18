@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<title>RPG-Maker</title>
+	<meta charset="utf-8"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+
+	<link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<link href="../../vendor/bootstrap-select/js/bootstrap-select.js" rel="stylesheet" />
+	<link href="../../css/core.css" rel="stylesheet" media="screen" />
+	<link href="../../css/page.css" rel="stylesheet" media="screen" />
+	<link href="../../css/form.css" rel="stylesheet" media="screen" />
+	<link href="../../css/fonts.css" rel="stylesheet" media="screen" />
+	<link href="../../css/navbar.css" rel="stylesheet" media="screen" />
+	<link href="https://fonts.googleapis.com/css?family=MedievalSharp" rel="stylesheet" />
+
+	<script src="../../vendor/jquery/jquery.min.js"></script>
+	<script src="../../vendor/bootstrap/js/popper.min.js"></script>
+	<script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../../vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script src="../../js/core.js"></script>
+
+	<script src="../../vendor/vue/vue.min.js"></script>
+
+
+</head>
+
+<body>
+	<div id="navBarContainer">
+		<nav id="primary-navigation">
+			<ul class="nav-list">
+				<li>
+					<a href="#" th:href="../index.html" class="active">HOME</a>
+				</li>
+				<li class="has-children">
+					<a href="#" class="">Rpg</a>
+					<ul>
+						<li>
+							<a href="#" th:href="@{/character/new}" class="">Criar personagem</a>
+						</li>
+						<li>
+							<p class="coming-soon">
+								<span class="coming-soon-name">Mais opções</span>
+								<span class="coming-soon-text" style="font-size:0pt">Em Breve...</span>
+							</p>
+						</li>
+					</ul>
+				</li>
+				<li class="has-children">
+					<a href="#" class="">TestCrud</a>
+					<ul>
+						<li>
+							<a href="./users.html">UserList</a>
+						</li>
+						<li>
+							<a href="./userform.html">UserCreat</a>
+						</li>
+						<li>
+							<a href="./players.html">PlayerList</a>
+						</li>
+						<li>
+							<a href="./playerform.html">PlayerCreat</a>
+						</li>
+						<li>
+							<a href="./chronicles.html">ChronicleList</a>
+						</li>
+						<li>
+							<a href="./chronicleform.html">ChronicleCreat</a>
+						</li>
+					</ul>
+				</li>
+				<li v-if="!userData">
+					<a href="#" class="">Login</a>
+					<a href="#" class="">Cadastra</a>
+				</li>
+				<li v-if="userData">
+					<a href="#" class="">Ola usuario</a>
+				</li>
+			</ul>
+			<div class="close"></div>
+		</nav>
+	</div>
+	<main class="main-container" id="chronicleFormContainer">
+
+		<div class="container">
+
+			<h2>Chronicle Details</h2>
+			<div>
+				<form class="form-horizontal" th:object="${chronicle}" th:action="@{/chronicle}" method="post">
+					<input type="hidden" th:field="*{id}" />
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Chronicle Id:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{id}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Name:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{name}" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">GameMaster:</label>
+						<div class="col-sm-10">
+							<select class="selectpicker" data-live-search="true" th:field="*{gameMaster}" name="gameMasterId">
+								<option th:each="player : ${players}" th:value="${player.id}" th:text="${player.name}">GameMaster</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">GameType:</label>
+						<div class="col-sm-10">
+							<select class="selectpicker" data-live-search="true" th:field="*{{gameType}}">
+								<option th:each="gameType : ${T(frojing.rpgmaker.entity.GameType).values()}" th:value="${{gameType}}" th:selected="${gameType == T(frojing.rpgmaker.entity.GameType)}"
+								    th:text="${gameType}"></option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Players:</label>
+						<div class="col-sm-10">
+							<select id="players" name="players[]" class="selectpicker" data-live-search="true" th:field="*{players}" size="10" th:multiple="true">
+								<option th:each="player : ${players}" th:value="${player.id}" th:text="${player.name}">Player</option>
+							</select>
+
+						</div>
+					</div>
+
+
+					<div class="row">
+						<button type="submit" class="btn btn-default">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+
+
+	<!-- coreJs -->
+	<script src="../../js/main.js"></script>
+
+
+	<script>
+		var userListVm = "";
+		userListVm = new Vue({
+			el: "#chronicleFormContainer",
+			data: {
+				user: []
+			},
+			methods: {}
+		});
+	</script>
+</body>
+
+</html>
