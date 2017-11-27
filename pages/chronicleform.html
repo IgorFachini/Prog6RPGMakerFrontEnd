@@ -8,93 +8,47 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
 
-	<link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-	<link href="../../vendor/bootstrap-select/js/bootstrap-select.js" rel="stylesheet" />
-	<link href="../../css/core.css" rel="stylesheet" media="screen" />
-	<link href="../../css/page.css" rel="stylesheet" media="screen" />
-	<link href="../../css/form.css" rel="stylesheet" media="screen" />
-	<link href="../../css/fonts.css" rel="stylesheet" media="screen" />
-	<link href="../../css/navbar.css" rel="stylesheet" media="screen" />
+	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<link href="../vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+	<link href="../css/core.css" rel="stylesheet" media="screen" />
+	<link href="../css/page.css" rel="stylesheet" media="screen" />
+	<link href="../css/form.css" rel="stylesheet" media="screen" />
+	<link href="../css/fonts.css" rel="stylesheet" media="screen" />
+	<link href="../css/navbar.css" rel="stylesheet" media="screen" />
 	<link href="https://fonts.googleapis.com/css?family=MedievalSharp" rel="stylesheet" />
 
-	<script src="../../vendor/jquery/jquery.min.js"></script>
-	<script src="../../vendor/bootstrap/js/popper.min.js"></script>
-	<script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="../../vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
-	<script src="../../js/core.js"></script>
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/popper.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script src="../js/core.js"></script>
 
-	<script src="../../vendor/vue/vue.min.js"></script>
+	<script src="../vendor/vue/vue.min.js"></script>
 
 
 </head>
 
 <body>
 	<div id="navBarContainer">
-		<nav id="primary-navigation">
-			<ul class="nav-list">
-				<li>
-					<a href="#" th:href="../index.html" class="active">HOME</a>
-				</li>
-				<li class="has-children">
-					<a href="#" class="">Rpg</a>
-					<ul>
-						<li>
-							<a href="#" th:href="@{/character/new}" class="">Criar personagem</a>
-						</li>
-						<li>
-							<p class="coming-soon">
-								<span class="coming-soon-name">Mais opções</span>
-								<span class="coming-soon-text" style="font-size:0pt">Em Breve...</span>
-							</p>
-						</li>
-					</ul>
-				</li>
-				<li class="has-children">
-					<a href="#" class="">TestCrud</a>
-					<ul>
-						<li>
-							<a href="./users.html">UserList</a>
-						</li>
-						<li>
-							<a href="./userform.html">UserCreat</a>
-						</li>
-						<li>
-							<a href="./players.html">PlayerList</a>
-						</li>
-						<li>
-							<a href="./playerform.html">PlayerCreat</a>
-						</li>
-						<li>
-							<a href="./chronicles.html">ChronicleList</a>
-						</li>
-						<li>
-							<a href="./chronicleform.html">ChronicleCreat</a>
-						</li>
-					</ul>
-				</li>
-				<li v-if="!userData">
-					<a href="#" class="">Login</a>
-					<a href="#" class="">Cadastra</a>
-				</li>
-				<li v-if="userData">
-					<a href="#" class="">Ola usuario</a>
-				</li>
-			</ul>
-			<div class="close"></div>
-		</nav>
+		<navbar-component></navbar-component>
 	</div>
 	<main class="main-container" id="chronicleFormContainer">
 
 		<div class="container">
 
-			<h2>Chronicle Details</h2>
+			<div class="d-flex justify-content-start">
+				<div class="p-2">
+					<h2>Chronicle Details</h2>
+				</div>
+				<div class="p-3">ID: {{chronicle.id}}</div>
+			</div>
 			<div>
 				<form class="form-horizontal" th:object="${chronicle}" th:action="@{/chronicle}" method="post">
 					<input type="hidden" th:field="*{id}" />
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Chronicle Id:</label>
+					<div v-show="false" class="form-group">
+						<label class="col-sm-2 control-label">Chronicle Id: </label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{id}" />
+							<input type="text" class="form-control" v-model="chronicle.id" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -143,15 +97,15 @@
 
 
 	<!-- coreJs -->
-	<script src="../../js/main.js"></script>
+	<script src="../js/main.js"></script>
 
 
 	<script>
-		var userListVm = "";
-		userListVm = new Vue({
+		var chronicleFormVm = "";
+		chronicleFormVm = new Vue({
 			el: "#chronicleFormContainer",
 			data: {
-				user: []
+				chronicle: {id: 12}
 			},
 			methods: {}
 		});

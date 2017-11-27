@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head lang="en">
+
+	<title>RPG-Maker</title>
+
+	<meta charset="utf-8"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+
+	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<link href="../vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+	<link href="../css/core.css" rel="stylesheet" media="screen" />
+	<link href="../css/page.css" rel="stylesheet" media="screen" />
+	<link href="../css/form.css" rel="stylesheet" media="screen" />
+	<link href="../css/fonts.css" rel="stylesheet" media="screen" />
+	<link href="../css/navbar.css" rel="stylesheet" media="screen" />
+	<link href="https://fonts.googleapis.com/css?family=MedievalSharp" rel="stylesheet" />
+
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/popper.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script src="../js/core.js"></script>
+	<script src="../vendor/vue/vue.min.js"></script>
+
+
+</head>
+
+<body>
+	<div id="navBarContainer">
+		<navbar-component></navbar-component>
+	</div>
+	<main class="main-container" id="userFormContainer">
+
+		<div class="container">
+
+			<div>
+				<form class="form-horizontal" th:object="${user}" th:action="@{/user}" method="post">
+					<div class="d-flex justify-content-start">
+						<div class="p-2">
+							<h2>User Details</h2>
+						</div>
+						<div class="p-3">ID:
+							<input type="text" name="id" v-model="user.id" disabled/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Name:</label>
+						<div class="col-sm-10">
+							<input type="text" name="name" class="form-control" v-model="user.name" required />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Email:</label>
+						<div class="col-sm-10">
+							<input type="text" name="email" class="form-control" v-model="user.email" required />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Password:</label>
+						<div class="col-sm-10">
+							<input type="text" name="password" class="form-control" v-model="user.password" required />
+						</div>
+					</div>
+					<div class="row">
+						<button type="submit" class="btn btn-default">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+
+	<!-- coreJs -->
+	<script src="../js/main.js"></script>
+	<script src="../js/data.js"></script>
+
+
+
+	<script>
+		var userFormVm = "";
+		userFormVm = new Vue({
+			el: "#userFormContainer",
+			data: {
+				user: new Object(UserModel)
+			},
+			methods: {}
+		});
+	</script>
+
+</body>
+
+</html>

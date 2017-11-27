@@ -8,86 +8,31 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
 
-	<link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-	<link href="../../vendor/bootstrap-select/js/bootstrap-select.js" rel="stylesheet" />
-	<link href="../../css/core.css" rel="stylesheet" media="screen" />
-	<link href="../../css/page.css" rel="stylesheet" media="screen" />
-	<link href="../../css/form.css" rel="stylesheet" media="screen" />
-	<link href="../../css/fonts.css" rel="stylesheet" media="screen" />
-	<link href="../../css/navbar.css" rel="stylesheet" media="screen" />
+	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<link href="../vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+	<link href="../css/core.css" rel="stylesheet" media="screen" />
+	<link href="../css/page.css" rel="stylesheet" media="screen" />
+	<link href="../css/form.css" rel="stylesheet" media="screen" />
+	<link href="../css/fonts.css" rel="stylesheet" media="screen" />
+	<link href="../css/navbar.css" rel="stylesheet" media="screen" />
 	<link href="https://fonts.googleapis.com/css?family=MedievalSharp" rel="stylesheet" />
-	<link href="../../css/char-caracteristcs.css" rel="stylesheet" media="screen" />
-	<link href="../../css/select-options.css" rel="stylesheet" media="screen" />
-	<link href="../../css/character-points.css" rel="stylesheet" media="screen" />
+	<link href="../css/char-caracteristcs.css" rel="stylesheet" media="screen" />
+	<link href="../css/select-options.css" rel="stylesheet" media="screen" />
+	<link href="../css/character-points.css" rel="stylesheet" media="screen" />
 
-
-
-
-	<script src="../../vendor/jquery/jquery.min.js"></script>
-	<script src="../../vendor/bootstrap/js/popper.min.js"></script>
-	<script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="../../vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
-	<script src="../../js/core.js"></script>
-
-	<script src="../../vendor/vue/vue.min.js"></script>
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/popper.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script src="../js/core.js"></script>
+	<script src="../vendor/vue/vue.min.js"></script>
 
 
 </head>
 
 <body>
 	<div id="navBarContainer" class="">
-		<nav id="primary-navigation">
-			<ul class="nav-list">
-				<li>
-					<a href="#" th:href="@{/}" class="active">HOME</a>
-				</li>
-				<li class="has-children">
-					<a href="#" class="">Rpg</a>
-					<ul>
-						<li>
-							<a href="#" th:href="@{/character/new}" class="">Criar personagem</a>
-						</li>
-						<li>
-							<p class="coming-soon">
-								<span class="coming-soon-name">Mais opções</span>
-								<span class="coming-soon-text" style="font-size:0pt">Em Breve...</span>
-							</p>
-						</li>
-					</ul>
-				</li>
-				<li class="has-children">
-					<a href="#" class="">TestCrud</a>
-					<ul>
-						<li>
-							<a href="./test/users.html">UserList</a>
-						</li>
-						<li>
-							<a href="./test/userform.html">UserCreat</a>
-						</li>
-						<li>
-							<a href="./test/players.html">PlayerList</a>
-						</li>
-						<li>
-							<a href="./test/playerform.html">PlayerCreat</a>
-						</li>
-						<li>
-							<a href="./test/chronicles.html">ChronicleList</a>
-						</li>
-						<li>
-							<a href="./test/chronicleform.html">ChronicleCreat</a>
-						</li>
-					</ul>
-				</li>
-				<li v-if="!userData">
-					<a href="#" class="">Login</a>
-					<a href="#" class="">Cadastra</a>
-				</li>
-				<li v-if="userData">
-					<a href="#" class="">Ola usuario</a>
-				</li>
-			</ul>
-			<div class="close"></div>
-		</nav>
+		<navbar-component></navbar-component>		
 	</div>
 	<!-- Main page container -->
 	<main class="main-container">
@@ -707,7 +652,7 @@
 	</main>
 
 	<!-- CORE JAVASCRIPT LYBRARIES... -->
-	<script src="../../js/main.js"></script>
+	<script src="../js/main.js"></script>
 	<!-- OTHER JAVASCRIPT LYBRARIES... -->
 	<script type="text/javascript">
 	</script>

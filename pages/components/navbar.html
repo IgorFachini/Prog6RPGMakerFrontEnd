@@ -1,0 +1,52 @@
+<nav id="primary-navigation">
+    <ul class="nav-list">
+      <li>
+        <a href="index.html" class="active">HOME</a>
+      </li>
+      <li class="has-children">
+        <a href="#" class="">Rpg</a>
+        <ul>
+          <li>
+            <a href="./world_of_darkness.html"  class="">Criar personagem</a>
+          </li>
+          <li>
+            <p class="coming-soon">
+              <span class="coming-soon-name">Mais opções</span>
+              <span class="coming-soon-text" style="font-size:0pt">Em Breve...</span>
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li class="has-children">
+        <a href="#" class="">TestCrud</a>
+        <ul>
+          <li>
+            <a href="./users.html">UserList</a>
+          </li>
+          <li>
+            <a href="./userform.html">UserCreat</a>
+          </li>
+          <li>
+            <a href="./players.html">PlayerList</a>
+          </li>
+          <li>
+            <a href="./playerform.html">PlayerCreat</a>
+          </li>
+          <li>
+            <a href="./chronicles.html">ChronicleList</a>
+          </li>
+          <li>
+            <a href="./chronicleform.html">ChronicleCreat</a>
+          </li>
+        </ul>
+      </li>
+      <li v-if="!this.userData">
+        <a href="#" class="">Login</a>
+        <a href="#" class="">Cadastra</a>					
+      </li>
+      <li v-if="this.userData">
+        <a href="#" class="">Ola usuario</a>											
+      </li>
+    </ul>
+    <div class="close"></div>
+  </nav>

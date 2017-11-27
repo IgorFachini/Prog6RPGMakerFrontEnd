@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+
+	<title>RPG-Maker</title>
+	<meta charset="utf-8"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+
+	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<link href="../vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
+	<link href="../css/core.css" rel="stylesheet" media="screen" />
+	<link href="../css/page.css" rel="stylesheet" media="screen" />
+	<link href="../css/form.css" rel="stylesheet" media="screen" />
+	<link href="../css/fonts.css" rel="stylesheet" media="screen" />
+	<link href="../css/navbar.css" rel="stylesheet" media="screen" />
+	<link href="https://fonts.googleapis.com/css?family=MedievalSharp" rel="stylesheet" />
+
+	<script src="../vendor/jquery/jquery.min.js"></script>
+	<script src="../vendor/bootstrap/js/popper.min.js"></script>
+	<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="../vendor/bootstrap-select/js/bootstrap-select.min.js"></script>
+	<script src="../js/core.js"></script>
+	<script src="../vendor/vue/vue.min.js"></script>
+
+
+</head>
+
+<body>
+	<div id="navBarContainer">
+		<navbar-component></navbar-component>
+	</div>
+	<main class="main-container" id="chroniclesListContainer">
+		<div class="container">
+			<div th:if="${not #lists.isEmpty(chronicles)}">
+				<h2>Chronicle List</h2>
+				<table class="table table-striped">
+					<tr>
+						<th>Id</th>
+						<th>Chronicle Id</th>
+						<th>Name</th>
+						<th>GameMaster</th>
+						<th>GameType</th>
+						<th>Players</th>
+						<th>View</th>
+						<th>Edit</th>
+						<th>Delete</th>
+					</tr>
+					<tr th:each="chronicle : ${chronicles}">
+						<td th:text="${chronicle.id}">
+							<a href="/chronicle/${chronicle.id}">Id</a>
+						</td>
+						<td th:text="${chronicle.id}">Id</td>
+						<td th:text="${chronicle.name}">name</td>
+						<td th:text="${chronicle.gameMaster.name}">GameMaster</td>
+						<td th:text="${chronicle.gameType}">GameType</td>
+						<td>
+							<span th:each="player : ${chronicle.players}">
+								<span th:text="${player.name}" />
+							</span>
+						</td>
+						<td>
+							<a th:href="${ '/chronicle/' + chronicle.id}">View</a>
+						</td>
+						<td>
+							<a th:href="${'/chronicle/edit/' + chronicle.id}">Edit</a>
+						</td>
+						<td>
+							<a th:href="${'/chronicle/delete/' + chronicle.id}">Delete</a>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+	</main>
+
+
+	<!-- coreJs -->
+	<script src="../js/main.js"></script>
+	<script>
+		var userListVm = "";
+		userListVm = new Vue({
+			el: "#chroniclesListContainer",
+			data: {
+				users: []
+			},
+			methods: {}
+		});
+	</script>
+</body>
+
+</html>
