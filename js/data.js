@@ -16,3 +16,6 @@ function sendOperation(type,data) {
 
 var UserModel = {id: "", name: "", email: "", password: ""}
 
+
+
+

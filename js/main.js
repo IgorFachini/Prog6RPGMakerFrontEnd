@@ -43,11 +43,11 @@ let navbarComponent = {
         </li>
       </ul>
     </li>
-    <li v-if="!this.userData">
+    <li v-if="!userData">
       <a :class="{active: isCurrentPage('signin.html')}" href="#" class="">Login</a>
       <a :class="{active: isCurrentPage('signup.html')}" href="#" class="">Cadastra</a>					
     </li>
-    <li v-if="this.userData">
+    <li v-if="userData">
       <a href="#" class="">Ola usuario</a>											
     </li>
   </ul>
@@ -55,19 +55,21 @@ let navbarComponent = {
 </nav>`,
   methods: {
     isCurrentPage: function(page) {
-      console.log(page);
       return window.location.pathname.split("/").pop() == page;
     }
+  },
+  data: function() {
+    return globalDataVar;
   }
+};
+var globalDataVar = {
+  userData: ""
 };
 navbarVm = new Vue({
   el: "#navBarContainer",
   data: {
-    userData: ""
   },
-  methods: {
-   
-  },
+  methods: {},
   components: {
     "navbar-component": navbarComponent
   }
