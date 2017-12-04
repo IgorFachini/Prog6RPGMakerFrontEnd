@@ -44,8 +44,7 @@ let navbarComponent = {
       </ul>
     </li>
     <li v-if="!userData">
-      <a :class="{active: isCurrentPage('signin.html')}" href="#" class="">Login</a>
-      <a :class="{active: isCurrentPage('signup.html')}" href="#" class="">Cadastra</a>					
+      <a :class="{active: isCurrentPage('signin_signup.html')}" href="./signin_signup.html" class="">Login/Cadastra</a>
     </li>
     <li v-if="userData">
       <a href="#" class="">Ola usuario</a>											
