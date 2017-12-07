@@ -6,7 +6,7 @@
 	<title>RPG-Maker</title>
 	<meta charset="utf-8"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, chronicle-scalable=no"></meta>
 
 	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 	<link href="../vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
@@ -38,7 +38,6 @@
 				<table class="table table-striped">
 					<tr>
 						<th>Id</th>
-						<th>Chronicle Id</th>
 						<th>Name</th>
 						<th>GameMaster</th>
 						<th>GameType</th>
@@ -47,27 +46,24 @@
 						<th>Edit</th>
 						<th>Delete</th>
 					</tr>
-					<tr th:each="chronicle : ${chronicles}">
-						<td th:text="${chronicle.id}">
-							<a href="/chronicle/${chronicle.id}">Id</a>
-						</td>
-						<td th:text="${chronicle.id}">Id</td>
-						<td th:text="${chronicle.name}">name</td>
-						<td th:text="${chronicle.gameMaster.name}">GameMaster</td>
-						<td th:text="${chronicle.gameType}">GameType</td>
+					<tr v-for="chronicle in chronicles">
+						<td th:text="${chronicle.id}">{{chronicle.Id}}</td>
+						<td th:text="${chronicle.name}">{{chronicle.Name}}</td>
+						<td th:text="${chronicle.gameMaster.name}">{{chronicle.GameMater.Name}}</td>
+						<td th:text="${chronicle.gameType}">{{chronicle.GameType}}</td>
 						<td>
-							<span th:each="player : ${chronicle.players}">
-								<span th:text="${player.name}" />
+							<span v-for="player : chronicle.Players">
+								<span>{{player.Name}}</span>
 							</span>
 						</td>
 						<td>
-							<a th:href="${ '/chronicle/' + chronicle.id}">View</a>
+							<a :href="showHref(chronicle.Id)">View</a>
 						</td>
 						<td>
-							<a th:href="${'/chronicle/edit/' + chronicle.id}">Edit</a>
+							<a :href="edtiHref(chronicle.Id)">Edit</a>
 						</td>
 						<td>
-							<a th:href="${'/chronicle/delete/' + chronicle.id}">Delete</a>
+							<button class="btn btn-danger" type="buttonbutton" v-on:click="deleteData(chronicle)">Delete</button>
 						</td>
 					</tr>
 				</table>
@@ -79,14 +75,36 @@
 
 	<!-- coreJs -->
 	<script src="../js/main.js"></script>
+	<script src="../js/data.js"></script>
+	
 	<script>
-		var userListVm = "";
-		userListVm = new Vue({
+		var chronicleListVm = "";
+		chronicleListVm = new Vue({
 			el: "#chroniclesListContainer",
 			data: {
-				users: []
+				chronicles: []
 			},
-			methods: {}
+			methods: {
+				deleteData(chronicle) {
+					console.log("delete", chronicle);
+					sendOperation("DELETE", "Chronicle", chronicle).then(resolve => {
+						chronicleListVm.chronicles = resolve;
+					}, (err) => {
+
+					});
+				},
+				showHref(id){
+					return `chronicleshow.html?Id=${id}`;
+				},
+				edtiHref(id){
+					return `chronicleform.html?Id=${id}`;
+				}
+			}
+		});
+		sendOperation("GET", "Chronicle", "").then(resolve => {
+			chronicleListVm.chronicles = resolve;
+		}, (err) => {
+
 		});
 	</script>
 </body>

@@ -6,7 +6,7 @@
 	<title>RPG-Maker</title>
 	<meta charset="utf-8"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, chronicle-scalable=no"></meta>
 
 	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 	<link href="../vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
@@ -32,82 +32,110 @@
 	<div id="navBarContainer">
 		<navbar-component></navbar-component>
 	</div>
-	<main class="main-container" id="chronicleFormContainer">
-
+	<main class="main-container">
 		<div class="container">
-
-			<div class="d-flex justify-content-start">
-				<div class="p-2">
-					<h2>Chronicle Details</h2>
+			<form id="chronicleFormContainer" class="form-horizontal" th:object="${chronicle}" th:action="@{/chronicle}" method="post">
+				<div class="d-flex justify-content-start">
+					<div class="p-2">
+						<h2>Chronicle Details</h2>
+					</div>
+					<div class="p-3">ID:
+						<input type="text" name="id" v-model="chronicle.Id" disabled/>
+					</div>
 				</div>
-				<div class="p-3">ID: {{chronicle.id}}</div>
-			</div>
-			<div>
-				<form class="form-horizontal" th:object="${chronicle}" th:action="@{/chronicle}" method="post">
-					<input type="hidden" th:field="*{id}" />
-					<div v-show="false" class="form-group">
-						<label class="col-sm-2 control-label">Chronicle Id: </label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" v-model="chronicle.id" />
-						</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Name:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="chronicle.Name" />
 					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Name:</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{name}" />
-						</div>
+				</div>
+				<!-- <div class="form-group">
+					<label class="col-sm-2 control-label">GameMaster:</label>
+					<div class="col-sm-10">
+						<select class="selectpicker" data-live-search="false" :field="players.lenght > 0 ? players[0].Name : ''" name="players">
+							<option v-for="player in players" :value="player.Id" :text="player.Name">{{player.Name}}</option>
+						</select>
 					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">GameMaster:</label>
-						<div class="col-sm-10">
-							<select class="selectpicker" data-live-search="true" th:field="*{gameMaster}" name="gameMasterId">
-								<option th:each="player : ${players}" th:value="${player.id}" th:text="${player.name}">GameMaster</option>
-							</select>
-						</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">GameType:</label>
+					<div class="col-sm-10">
+						<select class="selectpicker" data-live-search="true" :field="gameTypes">
+							<option v-for="gameType in gameTypes" :value="gameType.Value" :selected="gameType.Value == gameType.Value"
+							    :text="gameType.Name"></option>
+						</select>
 					</div>
-					<div class="form-group">
-						<label class="col-sm-2 control-label">GameType:</label>
-						<div class="col-sm-10">
-							<select class="selectpicker" data-live-search="true" th:field="*{{gameType}}">
-								<option th:each="gameType : ${T(frojing.rpgmaker.entity.GameType).values()}" th:value="${{gameType}}" th:selected="${gameType == T(frojing.rpgmaker.entity.GameType)}"
-								    th:text="${gameType}"></option>
-							</select>
-						</div>
+				</div>
+
+				<select class="selectpicker" data-live-search="true">
+					<option data-tokens="ketchup mustard">Hot Dog, Fries and a Soda</option>
+					<option data-tokens="mustard">Burger, Shake and a Smile</option>
+					<option data-tokens="frosting">Sugar, Spice and all things nice</option>
+				  </select>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Players:</label>
+					<div class="col-sm-10">
+						<select id="players" name="players[]" class="selectpicker" data-live-search="true" th:field="*{players}" size="10" th:multiple="true">
+							<option v-for="player in players" :value="player.Id" :text="player.Name">Player</option>
+						</select>
+
 					</div>
+				</div> -->
 
 
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Players:</label>
-						<div class="col-sm-10">
-							<select id="players" name="players[]" class="selectpicker" data-live-search="true" th:field="*{players}" size="10" th:multiple="true">
-								<option th:each="player : ${players}" th:value="${player.id}" th:text="${player.name}">Player</option>
-							</select>
-
-						</div>
-					</div>
-
-
-					<div class="row">
-						<button type="submit" class="btn btn-default">Submit</button>
-					</div>
-				</form>
-			</div>
+				<div class="row">
+					<button type="submit" class="btn btn-default">Submit</button>
+				</div>
+			</form>
 		</div>
 	</main>
 
 
 	<!-- coreJs -->
 	<script src="../js/main.js"></script>
-
+	<script src="../js/data.js"></script>
+	
 
 	<script>
 		var chronicleFormVm = "";
 		chronicleFormVm = new Vue({
 			el: "#chronicleFormContainer",
 			data: {
-				chronicle: {id: 12}
+				chronicle: JSON.parse(JSON.stringify(ChronicleModel)),
+				players: [],
+				gameTypes: GameTypes
 			},
-			methods: {}
+			methods: {
+				save() {
+					console.log("submit", chronicleFormVm.chronicle);
+					chronicleFormVm.chronicle.Id != "0" ?
+						sendOperation("PUT", "Chronicle", chronicleFormVm.chronicle).then(resolve => {}, (err) => {
+
+						}) :
+						sendOperation("POST", "Chronicle", chronicleFormVm.chronicle).then(resolve => {}, (err) => {
+
+						});
+				},
+				loadUrlParameter() {
+					var search = location.search.substring(1);
+					if (search) {
+						var paramters =
+							JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+						sendOperation("GET", "Chronicle", paramters).then(resolve => {
+							chronicleFormVm.chronicle = resolve;
+						}, (err) => {
+
+						});
+					}
+
+				}
+			}
+		});
+		chronicleFormVm.loadUrlParameter();
+		sendOperation("GET", "Player", "").then(resolve => {
+			chronicleFormVm.players = resolve;
+		}, (err) => {
+
 		});
 	</script>
 </body>

@@ -29,7 +29,7 @@
 
 <body>
 	<div id="navBarContainer">
-		<navbar-component></navbar-component>		
+		<navbar-component></navbar-component>
 	</div>
 	<main class="main-container" id="userShowContainer">
 		<div class="container">
@@ -40,19 +40,19 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label">User Id:</label>
 						<div class="col-sm-10">
-							<p class="form-control-static" th:text="${user.id}">User Id</p>
+							<p class="form-control-static">{{user.Id}}</p>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label">Name:</label>
+						<label class="col-sm-2 control-label">NickName:</label>
 						<div class="col-sm-10">
-							<p class="form-control-static" th:text="${user.name}">name</p>
+							<p class="form-control-static">{{user.NickName}}</p>
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-2 control-label">Email:</label>
+						<label class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
-							<p class="form-control-static" th:text="${user.email}">email</p>
+							<p class="form-control-static">{{user.Email}}</p>
 						</div>
 					</div>
 				</form>
@@ -62,17 +62,30 @@
 
 	<!-- coreJs -->
 	<script src="../js/main.js"></script>
-
+	<script src="../js/data.js"></script>
+	
 
 	<script>
-		var userListVm = "";
-		userListVm = new Vue({
+		var userShowVm = "";
+		userShowVm = new Vue({
 			el: "#userShowContainer",
 			data: {
 				user: []
 			},
-			methods: {}
+			methods: {
+				loadUrlParameter() {
+					var search = location.search.substring(1);
+					var paramters  = 
+					JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+					sendOperation("GET", "User", paramters).then(resolve => {
+						userShowVm.user = resolve;
+					}, (err) => {
+
+					});
+				}
+			}
 		});
+		userShowVm.loadUrlParameter();
 	</script>
 
 </body>

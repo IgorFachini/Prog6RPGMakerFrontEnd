@@ -6,7 +6,7 @@
 	<title>RPG-Maker</title>
 	<meta charset="utf-8"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, player-scalable=no"></meta>
 
 	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 	<link href="../vendor/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" />
@@ -34,21 +34,20 @@
 	<main class="main-container" id="playerFormContainer">
 
 		<div class="container">
-
-			<h2>Player Details</h2>
 			<div>
-				<form class="form-horizontal" th:object="${player}" th:action="@{/player}" method="post">
-					<input type="hidden" th:field="*{id}" />
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Player Id:</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{id}" />
+				<form v-on:submit.prevent="save" th:action="@{/player}" method="post">
+					<div class="d-flex justify-content-start">
+						<div class="p-2">
+							<h2>Player Details</h2>
+						</div>
+						<div class="p-3">ID:
+							<input type="text" name="id" v-model="player.Id" disabled/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" th:field="*{name}" />
+							<input type="text" class="form-control" v-model="player.Name" />
 						</div>
 					</div>
 
@@ -62,17 +61,43 @@
 
 	<!-- coreJs -->
 	<script src="../js/main.js"></script>
-
+	<script src="../js/data.js"></script>
+	
 
 	<script>
-		var userListVm = "";
-		userListVm = new Vue({
+		var playerFormVm = "";
+		playerFormVm = new Vue({
 			el: "#playerFormContainer",
 			data: {
-				player: []
+				player: JSON.parse(JSON.stringify(PlayerModel))
 			},
-			methods: {}
+			methods: {
+				save() {
+					console.log("submit", playerFormVm.player);
+					playerFormVm.player.Id != "0" ?
+						sendOperation("PUT", "Player", playerFormVm.player).then(resolve => {}, (err) => {
+
+						}) :
+						sendOperation("POST", "Player", playerFormVm.player).then(resolve => {}, (err) => {
+
+						});
+				},
+				loadUrlParameter() {
+					var search = location.search.substring(1);
+					if (search) {
+						var paramters =
+							JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+						sendOperation("GET", "Player", paramters).then(resolve => {
+							playerFormVm.player = resolve;
+						}, (err) => {
+
+						});
+					}
+
+				}
+			}
 		});
+		playerFormVm.loadUrlParameter();
 	</script>
 </body>
 
