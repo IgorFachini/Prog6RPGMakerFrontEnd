@@ -24,7 +24,8 @@
 	<script src="../js/core.js"></script>
 	<script src="../vendor/vue/vue.min.js"></script>
 
-
+	<link href="../vendor/toastr/toastr.min.css" rel="stylesheet" />
+	<script src="../vendor/toastr/toastr.min.js"></script>
 </head>
 
 <body>
@@ -77,7 +78,7 @@
 					var search = location.search.substring(1);
 					var paramters  = 
 					JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
-					sendOperation("GET", "User", paramters).then(resolve => {
+					sendOperation("GET", "User", paramters , "Dados do usuario").then(resolve => {
 						userShowVm.user = resolve;
 					}, (err) => {
 

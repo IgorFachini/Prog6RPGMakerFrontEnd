@@ -24,7 +24,8 @@
 	<script src="../js/core.js"></script>
 	<script src="../vendor/vue/vue.min.js"></script>
 
-
+	<link href="../vendor/toastr/toastr.min.css" rel="stylesheet" />
+	<script src="../vendor/toastr/toastr.min.js"></script>
 </head>
 
 <body>
@@ -80,25 +81,27 @@
 			methods: {
 				deleteData(user) {
 					console.log("delete", user);
-					sendOperation("DELETE", "User", user).then(resolve => {
-						userListVm.users = resolve;
+					sendOperation("DELETE", "User", user, "Deletar usuario").then(resolve => {
 					}, (err) => {
 
 					});
 				},
-				showHref(id){
+				showHref(id) {
 					return `usershow.html?Id=${id}`;
 				},
-				edtiHref(id){
+				edtiHref(id) {
 					return `userform.html?Id=${id}`;
 				}
 			}
 		});
-		sendOperation("GET", "User", "").then(resolve => {
-			userListVm.users = resolve;
-		}, (err) => {
+		function getAllusers() {
+			sendOperation("GET", "User", "", "Buscar usuarios").then(resolve => {
+				userListVm.users = resolve;
+			}, (err) => {
 
-		});
+			});
+		}
+		getAllusers();
 	</script>
 	<!-- var search = location.search.substring(1);
 				JSON.parse('{"' + decodeURI(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}') -->
